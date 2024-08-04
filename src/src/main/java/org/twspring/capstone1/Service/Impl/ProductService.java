@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 @Service
 public class ProductService implements IProductService {
-    ArrayList<Product> products = new ArrayList<Product>();
+    ArrayList<Product> products = new ArrayList<>();
 
     //Get All Products
     public ArrayList<Product> getProducts() {
