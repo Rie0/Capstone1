@@ -61,7 +61,7 @@ public class MerchantStockController {
         int flag = merchantStockService.updateStock(id,productId,merchantId,amount);
         switch (flag) {
             case 0:
-                return ResponseEntity.status(404).body(new ApiResponse("Stock updated successfully."));
+                return ResponseEntity.status(200).body(new ApiResponse("Stock updated successfully."));
             case 1:
                 return ResponseEntity.status(404).body(new ApiResponse("No product with ID "+productId+" found"));
             case 2:

@@ -53,6 +53,29 @@ public class UserController {
         }
         return ResponseEntity.status(404).body(new ApiResponse("No user with ID " + id + " found"));
     }
+
+    @PutMapping("/purchase/{userId}/{merchantId}/{productId}")
+    public ResponseEntity purchase(@PathVariable int userId, @PathVariable int merchantId, @PathVariable int productId) {
+        int flag = userService.purchaseProduct(userId,merchantId,productId);
+        switch (flag){
+            case 0:
+                return ResponseEntity.status(200).body(new ApiResponse("Product purchased successfully"));
+            case 1:
+                return ResponseEntity.status(400).body(new ApiResponse("No merchant with ID " + merchantId + " found"));
+            case 2:
+                return ResponseEntity.status(400).body(new ApiResponse("No product with ID " + productId + " found"));
+            case 3:
+                return ResponseEntity.status(400).body(new ApiResponse("No user with ID " + userId + " found"));
+            case 4:
+                return ResponseEntity.status(400).body(new ApiResponse("Not enough balance to purchase"));
+            case 5:
+                return ResponseEntity.status(400).body(new ApiResponse("Item out of stock"));
+            case 6:
+                return ResponseEntity.status(400).body(new ApiResponse("Merchant doesn't sell the product"));
+            default:
+                return ResponseEntity.status(400).body(new ApiResponse("An error has occurred"));
+        }
+    }
     //=======================================DELETE=======================================
     @DeleteMapping("/delete/user/{id}")
     public ResponseEntity deleteUser(@PathVariable int id) {
