@@ -12,6 +12,9 @@ import java.util.ArrayList;
 @Service
 public class UserService implements IUserService {
     ArrayList<User> users = new ArrayList<>();
+     static final double primeSubscriptionCost = 4.99;
+     static final double primeDiscount = 0.2; //%20 discount
+
     @Autowired
     private MerchantService merchantService;
     @Autowired
@@ -50,6 +53,31 @@ public class UserService implements IUserService {
         return false;
     }
 
+    //EXTRA: PRIME MEMBERSHIP
+    @Override
+    public int subscribeToPrime(int id) {
+
+        //check cases:
+        //user must be a customer
+        //user must have enough money for subscription
+        //add a date for renew?
+        if(getUser(id) == null) {
+            return 1; //user with ID doesn't exist.
+        }
+        if (getUser(id).getRole().equalsIgnoreCase("Admin")){
+            return 2; //Only customers can apply for prime membership
+        }
+        if (getUser(id).isPrimeMember()) {
+            return 3; //Already a member
+        }
+            if (getUser(id).getBalance()<primeSubscriptionCost) {
+            return 4; //Not enough balance
+        }
+        getUser(id).setBalance(getUser(id).getBalance()-primeSubscriptionCost);
+        getUser(id).setPrimeMember(true);
+        return 0; //success
+    }
+
     @Override
     public int purchaseProduct(int userId, int merchantId, int productId) {
         //Not found cases
@@ -65,12 +93,24 @@ public class UserService implements IUserService {
         if (getUser(userId).getRole().equalsIgnoreCase("Admin")){
             return 4; //case 4: User is an admin, admins cannot purchase from the website.
         }
+
         //Check if a merchant has the product
         for (MerchantStock merchantStock: merchantStockService.getMerchantStocks()) {
             if (merchantStock.getMerchantId()==merchantId && merchantStock.getProductId()==productId) {
                 //check if the product is stocked
                 if (merchantStock.getStock()>0){
                     if (getUser(userId).getBalance()>=productService.getProduct(productId).getPrice()){
+
+                        //EXTRA APPLY PRIME MEMBERSHIP DISCOUNT
+                        if (getUser(userId).isPrimeMember()){
+
+                            merchantStock.setStock(merchantStock.getStock()-1);
+                            getUser(userId).setBalance(getUser(userId).getBalance()-(
+                                    productService.getProduct(productId).getPrice()-(productService.getProduct(productId).getPrice()*primeDiscount)));
+
+                            return 0;// case 0: Success (change to a new case? yes)
+                        }
+
                         merchantStock.setStock(merchantStock.getStock()-1);
                         getUser(userId).setBalance(getUser(userId).getBalance()-productService.getProduct(productId).getPrice());
                         return 0;// case 0: Success
@@ -82,7 +122,7 @@ public class UserService implements IUserService {
                 }
             }
         }
-        return 7;//case 76: Merchant doesn't sell the product
+        return 7;//case 7: Merchant doesn't sell the product
     }
 
     @Override
