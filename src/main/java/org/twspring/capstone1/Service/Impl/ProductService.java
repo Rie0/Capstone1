@@ -11,7 +11,6 @@ import org.twspring.capstone1.Service.Interfaces.IProductService;
 
 import java.util.ArrayList;
 
-@Lazy
 @Service
 @RequiredArgsConstructor
 public class ProductService implements IProductService {
