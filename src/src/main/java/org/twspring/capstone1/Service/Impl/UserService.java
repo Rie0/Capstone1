@@ -55,27 +55,28 @@ public class UserService implements IUserService {
     //EXTRA: PRIME MEMBERSHIP
     @Override
     public int subscribeToPrime(int id) {
-
+        User user = getUser(id);
         //check cases:
-        if(getUser(id) == null) {
+        if(user == null) {
             return 1; //user with ID doesn't exist.
         }
-        if (getUser(id).getRole().equalsIgnoreCase("Admin")){
+        if (user.getRole().equalsIgnoreCase("Admin")){
             return 2; //Only customers can apply for prime membership
         }
-        if (getUser(id).isPrimeMember()) {
+        if (user.isPrimeMember()) {
             return 3; //Already a member
         }
-            if (getUser(id).getBalance()<primeSubscriptionCost) {
+            if (user.getBalance()<primeSubscriptionCost) {
             return 4; //Not enough balance
         }
-        getUser(id).setBalance(getUser(id).getBalance()-primeSubscriptionCost);
-        getUser(id).setPrimeMember(true);
+        user.setBalance(getUser(id).getBalance()-primeSubscriptionCost);
+        user.setPrimeMember(true);
         return 0; //success
     }
 
     @Override
     public int purchaseProduct(int userId, int merchantId, int productId) {
+        User user = getUser(userId);
         //Not found cases
         if (merchantService.getMerchant(merchantId) == null) {
             return 1; //case 1: no merchant with ID found
@@ -83,10 +84,10 @@ public class UserService implements IUserService {
         if (productService.getProduct(productId) == null) {
             return 2; //case 2: no product with ID found
         }
-        if (getUser(userId) == null) {
+        if (user == null) {
             return 3; //case 3: no user with ID found
         }
-        if (getUser(userId).getRole().equalsIgnoreCase("Admin")){
+        if (user.getRole().equalsIgnoreCase("Admin")){
             return 4; //case 4: User is an admin, admins cannot purchase from the website.
         }
 
@@ -95,20 +96,20 @@ public class UserService implements IUserService {
             if (merchantStock.getMerchantId()==merchantId && merchantStock.getProductId()==productId) {
                 //check if the product is stocked
                 if (merchantStock.getStock()>0){
-                    if (getUser(userId).getBalance()>=productService.getProduct(productId).getPrice()){
+                    if (user.getBalance()>=productService.getProduct(productId).getPrice()){
 
                         //EXTRA APPLY PRIME MEMBERSHIP DISCOUNT
-                        if (getUser(userId).isPrimeMember()){
+                        if (user.isPrimeMember()){
 
                             merchantStock.setStock(merchantStock.getStock()-1);
-                            getUser(userId).setBalance(getUser(userId).getBalance()-(
+                            user.setBalance(user.getBalance()-(
                                     productService.getProduct(productId).getPrice()-(productService.getProduct(productId).getPrice()*primeDiscount)));
 
                             return 0;// case 0: Success (change to a new case? yes)
                         }
 
                         merchantStock.setStock(merchantStock.getStock()-1);
-                        getUser(userId).setBalance(getUser(userId).getBalance()-productService.getProduct(productId).getPrice());
+                        user.setBalance(user.getBalance()-productService.getProduct(productId).getPrice());
                         return 0;// case 0: Success
                     }else {
                         return 5;// case 5: Not enough balances

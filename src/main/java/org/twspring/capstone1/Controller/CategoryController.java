@@ -41,6 +41,7 @@ public class CategoryController {
         categoryService.addCategory(category);
         return ResponseEntity.status(201).body(new ApiResponse("Category added successfully"));
     }
+
     //FOR TESTS
     @PostMapping("add/categories")
     public ResponseEntity addCategories(){
@@ -52,6 +53,7 @@ public class CategoryController {
         categoryService.addCategory(category3);
         return ResponseEntity.status(201).body(new ApiResponse("Category added successfully"));
     }
+
     //=======================================UPDATE=======================================
     @PutMapping("update/category/{id}")
     public ResponseEntity updateCategory(@PathVariable int id,@Valid @RequestBody Category category, Errors errors){

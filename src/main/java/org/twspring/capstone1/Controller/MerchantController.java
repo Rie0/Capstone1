@@ -43,6 +43,7 @@ public class MerchantController {
         merchantService.addMerchant(merchant);
         return ResponseEntity.status(201).body(new ApiResponse("Merchant added successfully"));
     }
+
     //FOR TESTS
     @PostMapping("add/merchants")
     public ResponseEntity addMerchants() {

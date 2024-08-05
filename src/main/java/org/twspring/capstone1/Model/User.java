@@ -34,5 +34,9 @@ public class User {
     @Positive(message = "Balance must be a positive number")
     private double balance;
 
+    @NotNull(message = "Is prime member cannot be empty")
+    @AssertFalse(message = "New members cannot have prime membership")
+    boolean isPrimeMember;
+
 
 }
