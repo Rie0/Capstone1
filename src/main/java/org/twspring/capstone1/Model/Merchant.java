@@ -16,4 +16,8 @@ public class Merchant {
     @NotEmpty(message = "Name cannot be empty")
     @Size(min=4, message = "Name cannot have less than 4 letters")
     private String name;
+
+    @NotNull(message = "Certified cannot be null")
+    @AssertFalse(message = "Certified must be initiated at false")
+    private boolean certified;
 }
