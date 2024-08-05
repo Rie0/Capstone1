@@ -54,12 +54,12 @@ public class ProductController {
     //FOR TESTS
     @PostMapping("/add/products")
     public ResponseEntity addProducts() {
-        Product product1 = new Product(1,"face cream",20.50,3);
-        Product product2 = new Product(2,"eye cream",15.50,3);
-        Product product3 = new Product(3,"key board",35.70,2);
-        Product product4 = new Product(4,"head phones",19.20,2);
-        Product product5 = new Product(5,"white shirt",10.00,1);
-        Product product6 = new Product(6,"blue jeans",15.50,1);
+        Product product1 = new Product(1,"face cream",20.50,3,0,0);
+        Product product2 = new Product(2,"eye cream",15.50,3,0,0);
+        Product product3 = new Product(3,"key board",35.70,2,0,0);
+        Product product4 = new Product(4,"head phones",19.20,2,0,0);
+        Product product5 = new Product(5,"white shirt",10.00,1,0,0);
+        Product product6 = new Product(6,"blue jeans",15.50,1,0,0);
         productService.addProduct(product1);
         productService.addProduct(product2);
         productService.addProduct(product3);
