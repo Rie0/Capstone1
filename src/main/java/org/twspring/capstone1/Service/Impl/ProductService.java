@@ -1,6 +1,8 @@
 package org.twspring.capstone1.Service.Impl;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.twspring.capstone1.Model.Category;
 import org.twspring.capstone1.Model.Product;
 import org.twspring.capstone1.Service.Interfaces.IProductService;
 
@@ -9,6 +11,9 @@ import java.util.ArrayList;
 @Service
 public class ProductService implements IProductService {
     ArrayList<Product> products = new ArrayList<>();
+
+    @Autowired
+    public CategoryService categoryService;
 
     //Get All Products
     public ArrayList<Product> getProducts() {
@@ -24,11 +29,33 @@ public class ProductService implements IProductService {
         return null;
     }
 
+    @Override
+    public ArrayList<Product> getProductsByCategory(String category) {
+        ArrayList<Product> foundProducts = new ArrayList<>();
+        //search for a category
+        for (Category cat: categoryService.getCategories()){
+            if (cat.getName().equals(category)){
+                //search for products with the category
+                for (Product product : products) {
+                    if (product.getCategoryId() == cat.getId()){
+                        foundProducts.add(product);
+                    }
+                }
+
+            }
+        }
+        return foundProducts;
+    }
+
     //Add new Product
     @Override
-    public void addProduct(Product product) {
+    public boolean addProduct(Product product) {
+        //check if category exists
+        if (categoryService.getCategory(product.getCategoryId()) == null){
+            return false;
+        }
         products.add(product);
-
+        return true;
     }
 
     //Update an existing product

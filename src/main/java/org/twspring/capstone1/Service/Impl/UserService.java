@@ -62,6 +62,9 @@ public class UserService implements IUserService {
         if (getUser(userId) == null) {
             return 3; //case 3: no user with ID found
         }
+        if (getUser(userId).getRole().equalsIgnoreCase("Admin")){
+            return 4; //case 4: User is an admin, admins cannot purchase from the website.
+        }
         //Check if a merchant has the product
         for (MerchantStock merchantStock: merchantStockService.getMerchantStocks()) {
             if (merchantStock.getMerchantId()==merchantId && merchantStock.getProductId()==productId) {
@@ -72,14 +75,14 @@ public class UserService implements IUserService {
                         getUser(userId).setBalance(getUser(userId).getBalance()-productService.getProduct(productId).getPrice());
                         return 0;// case 0: Success
                     }else {
-                        return 4;// case 4: Not enough balances
+                        return 5;// case 5: Not enough balances
                     }
                 }else {
-                    return 5;// case 5: Item out of stock
+                    return 6;// case 6: Item out of stock
                 }
             }
         }
-        return 6;//case 6: Merchant doesn't sell the product
+        return 7;//case 76: Merchant doesn't sell the product
     }
 
     @Override

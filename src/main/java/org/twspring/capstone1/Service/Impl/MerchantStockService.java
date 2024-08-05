@@ -3,6 +3,7 @@ package org.twspring.capstone1.Service.Impl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.twspring.capstone1.Model.Merchant;
 import org.twspring.capstone1.Model.MerchantStock;
 import org.twspring.capstone1.Service.Interfaces.IMerchantStockService;
 
@@ -35,8 +36,16 @@ public class MerchantStockService implements IMerchantStockService {
     }
 
     @Override
-    public void addMerchantStock(MerchantStock merchantStock) {
+    public int addMerchantStock(MerchantStock merchantStock) {
+        //check of merchant exists
+        if (merchantService.getMerchant(merchantStock.getMerchantId())==null) {
+            return 1; //case 1: no merchant with ID found
+        }
+        if (productService.getProduct(merchantStock.getProductId())==null) {
+            return 2; //case 2: no product with ID found
+        }
         merchantStocks.add(merchantStock);
+        return 0; //success
     }
 
     @Override

@@ -43,6 +43,15 @@ public class MerchantController {
         merchantService.addMerchant(merchant);
         return ResponseEntity.status(201).body(new ApiResponse("Merchant added successfully"));
     }
+    //FOR TESTS
+    @PostMapping("add/merchants")
+    public ResponseEntity addMerchants() {
+        Merchant merchant1 = new Merchant(1,"Merchant 1");
+        Merchant merchant2 = new Merchant(2,"Merchant 2");
+        merchantService.addMerchant(merchant1);
+        merchantService.addMerchant(merchant2);
+        return ResponseEntity.status(201).body(new ApiResponse("Merchants added successfully"));
+    }
     //=======================================UPDATE=======================================
     @PutMapping("update/merchant/{id}")
     public ResponseEntity updateMerchant(@PathVariable int id,@Valid @RequestBody Merchant merchant, Errors errors) {

@@ -38,7 +38,38 @@ public class MerchantStockController {
             String message = errors.getFieldError().getDefaultMessage();
             return ResponseEntity.status(400).body(new ApiResponse(message));
         }
-        merchantStockService.addMerchantStock(merchantStock);
+        int flag = merchantStockService.addMerchantStock(merchantStock);
+        switch (flag) {
+            case 0:
+                return ResponseEntity.status(200).body(new ApiResponse("Merchant stock added successfully"));
+            case 1:
+                return ResponseEntity.status(400).body(new ApiResponse("No merchant with ID "+merchantStock.getMerchantId()+" was found"));
+            case 2:
+                    return ResponseEntity.status(400).body(new ApiResponse("No product with ID "+merchantStock.getProductId()+" was found"));
+        }
+        //merchantStockService.addMerchantStock(merchantStock);
+        return ResponseEntity.status(201).body(new ApiResponse("Merchant stock added successfully"));
+    }
+    //FOR TESTS
+    @PostMapping("/add/merchant_stocks")
+    public ResponseEntity addMerchantStocks() {
+        //merchant1
+        MerchantStock merchant1Stock1 = new MerchantStock(1,3,1,10);
+        MerchantStock merchant1Stock2 = new MerchantStock(2,4,1,5);
+
+        //merchant2
+        //beauty
+        MerchantStock merchant2Stock1 = new MerchantStock(3,1,2,10);
+        MerchantStock merchant2Stock2 = new MerchantStock(4,2,2,10);
+        //clothes
+        MerchantStock merchant2Stock3 = new MerchantStock(5,5,2,10);
+        MerchantStock merchant2Stock4 = new MerchantStock(6,6,2,10);
+        merchantStockService.addMerchantStock(merchant1Stock1);
+        merchantStockService.addMerchantStock(merchant1Stock2);
+        merchantStockService.addMerchantStock(merchant2Stock1);
+        merchantStockService.addMerchantStock(merchant2Stock2);
+        merchantStockService.addMerchantStock(merchant2Stock3);
+        merchantStockService.addMerchantStock(merchant2Stock4);
         return ResponseEntity.status(201).body(new ApiResponse("Merchant stock added successfully"));
     }
     //=======================================UPDATE=======================================

@@ -33,4 +33,6 @@ public class User {
     @NotNull(message = "Balance cannot be empty")
     @Positive(message = "Balance must be a positive number")
     private double balance;
+
+
 }
