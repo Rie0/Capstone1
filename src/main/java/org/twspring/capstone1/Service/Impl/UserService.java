@@ -1,10 +1,7 @@
 package org.twspring.capstone1.Service.Impl;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
-import org.twspring.capstone1.Model.Merchant;
 import org.twspring.capstone1.Model.MerchantStock;
 import org.twspring.capstone1.Model.User;
 import org.twspring.capstone1.Service.Interfaces.IUserService;
@@ -107,7 +104,7 @@ public class UserService implements IUserService {
                             user.setBalance(user.getBalance()-(
                                     productService.getProduct(productId).getPrice()-(productService.getProduct(productId).getPrice()*primeDiscount)));
 
-                            return 0;// case 0: Success (change to a new case? yes)
+                            return 8;// case 8: Success prime purchase
                         }
 
                         merchantStock.setStock(merchantStock.getStock()-1);

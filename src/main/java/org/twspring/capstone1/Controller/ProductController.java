@@ -47,7 +47,7 @@ public class ProductController {
             return ResponseEntity.status(400).body(new ApiResponse(message));
         }
         if (productService.addProduct(product)) {
-            return ResponseEntity.status(201).body("Product added successfully");
+            return ResponseEntity.status(201).body(new ApiResponse("Product added successfully"));
         }
         return ResponseEntity.status(409).body(new ApiResponse("Category with ID "+product.getCategoryId()+" does not exist"));
     }
@@ -66,7 +66,7 @@ public class ProductController {
         productService.addProduct(product4);
         productService.addProduct(product5);
         productService.addProduct(product6);
-        return ResponseEntity.status(201).body("Product added successfully");
+        return ResponseEntity.status(201).body(new ApiResponse("Product added successfully"));
     }
     //=======================================UPDATE=======================================
     @PutMapping("/update/product/{id}")
@@ -77,7 +77,7 @@ public class ProductController {
         }
         boolean isUpdated = productService.updateProduct(id,product);
         if (isUpdated) {
-            return ResponseEntity.status(201).body("Product updated successfully");
+            return ResponseEntity.status(201).body(new ApiResponse("Product updated successfully"));
         }
         return ResponseEntity.status(404).body(new ApiResponse("No product with ID "+id+" found"));
     }
@@ -117,7 +117,7 @@ public class ProductController {
     public ResponseEntity deleteProduct(@PathVariable int id) {
         boolean isDeleted = productService.deleteProduct(id);
         if (isDeleted) {
-            return ResponseEntity.status(201).body("Product deleted successfully");
+            return ResponseEntity.status(201).body(new ApiResponse("Product deleted successfully"));
         }
         return ResponseEntity.status(404).body(new ApiResponse("No product with ID "+id+" found"));
     }

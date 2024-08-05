@@ -23,8 +23,6 @@ public class Review {
     @Min(value = 1, message = "Product ID cannot be less than 1")
     private int productId;
 
-    //add title
-
     @NotNull(message = "Score cannot be empty")
     @Positive(message = "Score cannot be a zero or a negative number")
     @Range(min = 1, max = 5, message = "Score must be between 1 to 5")

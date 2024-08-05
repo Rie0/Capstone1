@@ -93,6 +93,8 @@ public class UserController {
                 return ResponseEntity.status(400).body(new ApiResponse("Item out of stock"));
             case 7:
                 return ResponseEntity.status(400).body(new ApiResponse("Merchant doesn't sell the product"));
+            case 8:
+                return ResponseEntity.status(400).body(new ApiResponse("Product purchased successfully with prime discount"));
             default:
                 return ResponseEntity.status(400).body(new ApiResponse("An error has occurred"));
         }

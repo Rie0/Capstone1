@@ -9,8 +9,6 @@ import org.twspring.capstone1.Api.ApiResponse;
 import org.twspring.capstone1.Model.Review;
 import org.twspring.capstone1.Service.Impl.ReviewService;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("api/v1/review")
 @RequiredArgsConstructor

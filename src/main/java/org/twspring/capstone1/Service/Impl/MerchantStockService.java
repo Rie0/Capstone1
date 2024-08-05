@@ -1,9 +1,7 @@
 package org.twspring.capstone1.Service.Impl;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.twspring.capstone1.Model.Merchant;
 import org.twspring.capstone1.Model.MerchantStock;
 import org.twspring.capstone1.Service.Interfaces.IMerchantStockService;
 
@@ -14,7 +12,6 @@ import java.util.ArrayList;
 public class MerchantStockService implements IMerchantStockService {
     ArrayList<MerchantStock> merchantStocks= new ArrayList<>();
 
-    //inject product and merchant to access the arrays
     private final ProductService productService;
     private final MerchantService merchantService;
 

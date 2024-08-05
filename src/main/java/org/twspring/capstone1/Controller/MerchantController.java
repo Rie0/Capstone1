@@ -9,8 +9,6 @@ import org.twspring.capstone1.Api.ApiResponse;
 import org.twspring.capstone1.Model.Merchant;
 import org.twspring.capstone1.Service.Impl.MerchantService;
 
-import java.util.ArrayList;
-
 @RestController
 @RequestMapping("api/v1/merchant")
 @RequiredArgsConstructor
