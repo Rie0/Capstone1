@@ -1,6 +1,6 @@
 package org.twspring.capstone1.Service.Impl;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.twspring.capstone1.Model.Category;
 import org.twspring.capstone1.Model.Product;
@@ -9,11 +9,11 @@ import org.twspring.capstone1.Service.Interfaces.IProductService;
 import java.util.ArrayList;
 
 @Service
+@RequiredArgsConstructor
 public class ProductService implements IProductService {
     ArrayList<Product> products = new ArrayList<>();
 
-    @Autowired
-    public CategoryService categoryService;
+    private final CategoryService categoryService;
 
     //Get All Products
     public ArrayList<Product> getProducts() {
@@ -61,9 +61,14 @@ public class ProductService implements IProductService {
     //Update an existing product
     @Override
     public boolean updateProduct(int id, Product product) {
+        //reviews aren't updating with the product details
+        int numberOfReviews = getProduct(id).getNumberOfReview();
+        double averageScore = getProduct(id).getAverageScore();
         for (int i = 0; i < products.size(); i++) {
             if (products.get(i).getId() == id) {
                 products.set(i, product);
+                product.setNumberOfReview(numberOfReviews);
+                product.setAverageScore(averageScore);
                 return true;
             }
         }

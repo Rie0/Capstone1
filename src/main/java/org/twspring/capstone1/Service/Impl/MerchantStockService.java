@@ -15,10 +15,8 @@ public class MerchantStockService implements IMerchantStockService {
     ArrayList<MerchantStock> merchantStocks= new ArrayList<>();
 
     //inject product and merchant to access the arrays
-    @Autowired
-    private ProductService productService;
-    @Autowired
-    private MerchantService merchantService;
+    private final ProductService productService;
+    private final MerchantService merchantService;
 
     @Override
     public ArrayList<MerchantStock> getMerchantStocks() {

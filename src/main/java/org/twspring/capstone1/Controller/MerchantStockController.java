@@ -41,15 +41,17 @@ public class MerchantStockController {
         int flag = merchantStockService.addMerchantStock(merchantStock);
         switch (flag) {
             case 0:
-                return ResponseEntity.status(200).body(new ApiResponse("Merchant stock added successfully"));
+                return ResponseEntity.status(201).body(new ApiResponse("Merchant stock added successfully"));
             case 1:
                 return ResponseEntity.status(400).body(new ApiResponse("No merchant with ID "+merchantStock.getMerchantId()+" was found"));
             case 2:
-                    return ResponseEntity.status(400).body(new ApiResponse("No product with ID "+merchantStock.getProductId()+" was found"));
+                return ResponseEntity.status(400).body(new ApiResponse("No product with ID "+merchantStock.getProductId()+" was found"));
+            default:
+                return ResponseEntity.status(400).body(new ApiResponse("An error occurred."));
+
         }
-        //merchantStockService.addMerchantStock(merchantStock);
-        return ResponseEntity.status(201).body(new ApiResponse("Merchant stock added successfully"));
     }
+
     //FOR TESTS
     @PostMapping("/add/merchant_stocks")
     public ResponseEntity addMerchantStocks() {
@@ -86,8 +88,8 @@ public class MerchantStockController {
         return ResponseEntity.status(404).body(new ApiResponse("No merchant stock with ID "+id+" found"));
     }
 
-    //An endpoint where an Admin can add more stocks of product to a Merchant Stock
-    @PutMapping("/update/merchant_stock/add_stock/{id}/{productId}/{merchantId}/{amount}") //enhance endpoint path
+
+    @PutMapping("/update/merchant_stock/add_stock/{id}/{productId}/{merchantId}/{amount}")
     public ResponseEntity updateStock(@PathVariable int id, @PathVariable int productId, @PathVariable int merchantId, @PathVariable int amount) {
         int flag = merchantStockService.updateStock(id,productId,merchantId,amount);
         switch (flag) {

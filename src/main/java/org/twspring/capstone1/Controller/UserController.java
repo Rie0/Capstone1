@@ -43,16 +43,16 @@ public class UserController {
     @PostMapping("add/users") //FOR TESTS
     public ResponseEntity addUsers() {
         User user1 = new User(10,"user1","Aa123@wqee","UserA@gmail.com"
-                ,"Customer",20000.00);
+                ,"Customer",20000.00,false);
         userService.addUser(user1);
         User user2 = new User(11,"user2","Bb123@wqee","UserB@gmail.com"
-                ,"Customer",20000.00);
+                ,"Customer",20000.00,false);
         userService.addUser(user2);
         User user3 = new User(12,"user3","Cc123@wqee","UserC@gmail.com"
-                ,"Customer",20000.00);
+                ,"Customer",20000.00,false);
         userService.addUser(user3);
         User admin = new User(13,"admin","Dd123@wqee","Admin@this.com"
-                ,"Customer",20000.00);
+                ,"Customer",20000.00,false);
         userService.addUser(admin);
 
         return ResponseEntity.status(201).body(new ApiResponse("Users added successfully"));
@@ -93,6 +93,27 @@ public class UserController {
                 return ResponseEntity.status(400).body(new ApiResponse("Item out of stock"));
             case 7:
                 return ResponseEntity.status(400).body(new ApiResponse("Merchant doesn't sell the product"));
+            default:
+                return ResponseEntity.status(400).body(new ApiResponse("An error has occurred"));
+        }
+    }
+
+    //EXTRA: PRIME MEMBERSHIP
+    @PutMapping("/update/user/subscribe/{id}")
+    public ResponseEntity updateUserSubscribe(@PathVariable int id) {
+
+        int flag = userService.subscribeToPrime(id);
+        switch (flag){
+            case 0:
+                return ResponseEntity.status(200).body(new ApiResponse("User subscribed successfully"));
+            case 1:
+                return ResponseEntity.status(400).body(new ApiResponse("User with ID " + id + " doesn't exist"));
+            case 2:
+                return ResponseEntity.status(400).body(new ApiResponse("Only customers can subscribe to a Prime membership"));
+            case 3:
+                return ResponseEntity.status(400).body(new ApiResponse("User with ID "+id+" already subscribed"));
+            case 4:
+                return ResponseEntity.status(400).body(new ApiResponse("User doesn't have enough balance"));
             default:
                 return ResponseEntity.status(400).body(new ApiResponse("An error has occurred"));
         }
