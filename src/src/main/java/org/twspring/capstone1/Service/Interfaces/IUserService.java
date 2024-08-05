@@ -9,5 +9,7 @@ public interface IUserService {
     public User getUser(int id);
     public void addUser(User user);
     public boolean updateUser(int id, User user);
+    public int subscribeToPrime(int id);
+    public int purchaseProduct(int userId,int merchantId, int productId);
     public boolean deleteUser(int id);
 }

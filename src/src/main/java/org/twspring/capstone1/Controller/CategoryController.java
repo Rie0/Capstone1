@@ -30,6 +30,7 @@ public class CategoryController {
         }
         return ResponseEntity.status(200).body(categoryService.getCategory(id));
     }
+
     //=======================================POST=======================================
     @PostMapping("add/category")
     public ResponseEntity addCategory(@Valid @RequestBody Category category, Errors errors){
@@ -40,6 +41,19 @@ public class CategoryController {
         categoryService.addCategory(category);
         return ResponseEntity.status(201).body(new ApiResponse("Category added successfully"));
     }
+
+    //FOR TESTS
+    @PostMapping("add/categories")
+    public ResponseEntity addCategories(){
+        Category category1 = new Category(1,"Clothes");
+        Category category2 = new Category(2,"Technology");
+        Category category3 = new Category(3,"Beauty");
+        categoryService.addCategory(category1);
+        categoryService.addCategory(category2);
+        categoryService.addCategory(category3);
+        return ResponseEntity.status(201).body(new ApiResponse("Category added successfully"));
+    }
+
     //=======================================UPDATE=======================================
     @PutMapping("update/category/{id}")
     public ResponseEntity updateCategory(@PathVariable int id,@Valid @RequestBody Category category, Errors errors){

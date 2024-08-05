@@ -19,8 +19,7 @@ public class User {
 
     @NotEmpty(message = "Password cannot be empty")
     @Size(min = 7, message = "Password must have at least 7 characters")
-    //test
-    @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*#?&])[A-Za-z\\d@$!%*#?&]$", message = "Password must have both characters and digits and a special character")
+    @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*#?&])[A-Za-z\\d@$!%*#?&]{7,}$", message = "Password must have both characters and digits and a special character")
     private String password;
 
     @NotEmpty(message = "Email cannot be empty")
@@ -34,4 +33,10 @@ public class User {
     @NotNull(message = "Balance cannot be empty")
     @Positive(message = "Balance must be a positive number")
     private double balance;
+
+    @NotNull(message = "Is prime member cannot be empty")
+    @AssertFalse(message = "New members cannot have prime membership")
+    boolean isPrimeMember;
+
+
 }
