@@ -4,6 +4,8 @@ import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
+import java.util.ArrayList;
+
 @Data
 @AllArgsConstructor
 public class User {
@@ -36,7 +38,10 @@ public class User {
 
     @NotNull(message = "Is prime member cannot be empty")
     @AssertFalse(message = "New members cannot have prime membership")
-    boolean isPrimeMember;
+    private boolean isPrimeMember;
 
+    //EXTRA
+    @Null(message = "bought Products IDs must be initiated to null")
+    private final ArrayList<Integer> boughtProductsIds = new ArrayList<>();
 
 }

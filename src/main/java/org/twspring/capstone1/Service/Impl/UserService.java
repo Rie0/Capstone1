@@ -105,11 +105,18 @@ public class UserService implements IUserService {
                                     productService.getProduct(productId).getPrice()-
                                             (productService.getProduct(productId).getPrice()*primeDiscount)));
 
+                            //add id the brought product array
+                            user.getBoughtProductsIds().add(productId);
+
                             return 8;// case 8: Success prime purchase
                         }
 
                         merchantStock.setStock(merchantStock.getStock()-1);
                         user.setBalance(user.getBalance()-productService.getProduct(productId).getPrice());
+
+                        //add id the brought product array
+                        user.getBoughtProductsIds().add(productId);
+
                         return 0;// case 0: Success
                     }else {
                         return 5;// case 5: Not enough balances

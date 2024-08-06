@@ -30,5 +30,5 @@ public class Review {
 
     @NotEmpty(message = "Comment cannot be empty")
     @Size(min = 5, max = 255, message = "Comment must have between 5 to 255 characters")
-    public String comment;
+    private String comment;
 }

@@ -53,6 +53,9 @@ public class ReviewService implements IReviewService {
         if (productService.getProduct(review.getProductId()) == null) {
             return 2; //case 2: Product with ID doesn't exist
         }
+        if (!userService.getUser(review.getUserId()).getBoughtProductsIds().contains(review.getProductId())) {
+            return 3; //case 3: user doesn't own product
+        }
 
         reviews.add(review);
 

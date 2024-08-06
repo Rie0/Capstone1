@@ -54,6 +54,8 @@ public class ReviewController {
                 return ResponseEntity.status(400).body(new ApiResponse("User with ID " + review.getUserId() + " doesn't exists"));
             case 2:
                 return ResponseEntity.status(400).body(new ApiResponse("Product with ID " + review.getProductId() + " doesn't exists"));
+            case 3:
+                return ResponseEntity.status(400).body(new ApiResponse("User didn't buy the product"));
             default:
                 return ResponseEntity.status(400).body(new ApiResponse("An error occurred"));
         }
