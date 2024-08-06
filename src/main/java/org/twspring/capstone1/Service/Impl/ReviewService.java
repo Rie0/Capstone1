@@ -127,7 +127,8 @@ public class ReviewService implements IReviewService {
                 // Update the product's review
                 if (oldNumberOfReviews > 1) {
                     product.setNumberOfReview(oldNumberOfReviews - 1);
-                    product.setAverageScore((oldNumberOfReviews * oldAverageScore - thisReview.getScore()) / (oldNumberOfReviews - 1));
+                    product.setAverageScore((oldNumberOfReviews * oldAverageScore - thisReview.getScore()) /
+                            (oldNumberOfReviews - 1));
                 } else {
                     //in case there's only this review
                     product.setNumberOfReview(0);

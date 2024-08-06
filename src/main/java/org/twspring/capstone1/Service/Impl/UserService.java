@@ -59,7 +59,7 @@ public class UserService implements IUserService {
         if(user == null) {
             return 1; //user with ID doesn't exist.
         }
-        if (user.getRole().equalsIgnoreCase("Admin")){
+        if (!user.getRole().equalsIgnoreCase("Customer")){
             return 2; //Only customers can apply for prime membership
         }
         if (user.isPrimeMember()) {
@@ -102,7 +102,8 @@ public class UserService implements IUserService {
 
                             merchantStock.setStock(merchantStock.getStock()-1);
                             user.setBalance(user.getBalance()-(
-                                    productService.getProduct(productId).getPrice()-(productService.getProduct(productId).getPrice()*primeDiscount)));
+                                    productService.getProduct(productId).getPrice()-
+                                            (productService.getProduct(productId).getPrice()*primeDiscount)));
 
                             return 8;// case 8: Success prime purchase
                         }
