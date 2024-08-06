@@ -105,7 +105,8 @@ public class ProductService implements IProductService {
                 if (product.isOnSale()){
                     return 5; //category already on sale
                 }
-                product.setPrice(product.getPrice()-(product.getPrice()*salePercentage));
+
+                product.setPrice(Math.round((product.getPrice()-(product.getPrice()*salePercentage))*100.0)/100.0);
                 product.setOnSale(true);
             }
         }

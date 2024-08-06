@@ -69,7 +69,8 @@ public class ReviewService implements IReviewService {
         double oldAverageScore = product.getAverageScore();
 
         product.setNumberOfReview(oldNumberOfReviews + 1);
-        product.setAverageScore((oldAverageScore * oldNumberOfReviews + review.getScore()) / (oldNumberOfReviews + 1));
+
+        product.setAverageScore(Math.round(((oldAverageScore * oldNumberOfReviews + review.getScore()) / (oldNumberOfReviews + 1))*100.0)/100.0);
 
         return 0; // case 0: success
     }
@@ -105,7 +106,8 @@ public class ReviewService implements IReviewService {
         int numberOfReviews = product.getNumberOfReview();
 
         // Update average score
-        product.setAverageScore(((numberOfReviews * oldAverageScore) - oldScore + newScore) / numberOfReviews);
+
+        product.setAverageScore(Math.round((((numberOfReviews * oldAverageScore) - oldScore + newScore) / numberOfReviews)*100.0)/100.0);
 
         reviews.set(reviews.indexOf(oldReview), review);
         return 0; //success
@@ -127,8 +129,9 @@ public class ReviewService implements IReviewService {
                 // Update the product's review
                 if (oldNumberOfReviews > 1) {
                     product.setNumberOfReview(oldNumberOfReviews - 1);
-                    product.setAverageScore((oldNumberOfReviews * oldAverageScore - thisReview.getScore()) /
-                            (oldNumberOfReviews - 1));
+
+                    product.setAverageScore(Math.round(((oldNumberOfReviews * oldAverageScore - thisReview.getScore()) /
+                            (oldNumberOfReviews - 1))*100.0)/100.0);
                 } else {
                     //in case there's only this review
                     product.setNumberOfReview(0);
